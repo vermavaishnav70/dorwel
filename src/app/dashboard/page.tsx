@@ -12,6 +12,7 @@ import { NavigationItem } from "@/types/dashboard";
 
 const navigationItems: NavigationItem[] = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },
+  { id: "leads", label: "Leads", href: "/leads" },
   { id: "crm", label: "CRM", href: "/crm" },
   { id: "projects", label: "Projects", href: "/projects" },
   {
