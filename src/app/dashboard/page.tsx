@@ -12,11 +12,11 @@ import { NavigationItem } from "@/types/dashboard";
 
 const navigationItems: NavigationItem[] = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },
-  { id: "crm", label: "CRM", href: "/crm" },
+  { id: "leads", label: "Leads", href: "/leads" },
   { id: "projects", label: "Projects", href: "/projects" },
   {
-    id: "proposals-docs",
-    label: "Proposals & Docs",
+    id: "proposals",
+    label: "Proposals",
     href: "/proposals",
     hasDropdown: true,
     dropdownItems: [
