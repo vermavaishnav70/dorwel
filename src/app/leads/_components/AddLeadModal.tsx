@@ -50,8 +50,8 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50  flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
         <Card className="border-0 shadow-2xl">
           {/* Header */}
           <div className="p-6 border-b border-gray-200">
@@ -154,11 +154,21 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select project type</option>
-                      <option value="Residential - Full Home">Residential - Full Home</option>
-                      <option value="Residential - Partial">Residential - Partial</option>
-                      <option value="Commercial - Office">Commercial - Office</option>
-                      <option value="Commercial - Retail">Commercial - Retail</option>
-                      <option value="Commercial - Restaurant">Commercial - Restaurant</option>
+                      <option value="Residential - Full Home">
+                        Residential - Full Home
+                      </option>
+                      <option value="Residential - Partial">
+                        Residential - Partial
+                      </option>
+                      <option value="Commercial - Office">
+                        Commercial - Office
+                      </option>
+                      <option value="Commercial - Retail">
+                        Commercial - Retail
+                      </option>
+                      <option value="Commercial - Restaurant">
+                        Commercial - Restaurant
+                      </option>
                       <option value="Renovation">Renovation</option>
                       <option value="Consultation">Consultation</option>
                     </select>
