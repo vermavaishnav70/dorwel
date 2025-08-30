@@ -45,16 +45,37 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function ChartBarInteractive() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("projects");
+  const [range, setRange] = React.useState<"week" | "month" | "year">("week");
 
-  const total = React.useMemo(
-    () => ({
-      projects: chartData.reduce((acc, curr) => acc + curr.projects, 0),
-      revenue: chartData.reduce((acc, curr) => acc + curr.revenue, 0),
-    }),
-    []
+  const week = ["S", "M", "T", "W", "T", "F", "S"];
+
+  const weekly = React.useMemo(() => {
+    // Map existing chartData dates into day-of-week buckets
+    const buckets = new Array(7).fill(0).map(() => ({ projects: 0, revenue: 0 }));
+    chartData.forEach((d) => {
+      const idx = new Date(d.date).getDay();
+      buckets[idx] = { projects: d.projects, revenue: d.revenue };
+    });
+    return buckets.map((b, i) => ({ day: week[i], ...b }));
+  }, []);
+
+  const activeSeries: "projects" | "revenue" = "projects"; // Design emphasizes projects dots
+  const maxVal = Math.max(...weekly.map((d) => d[activeSeries]));
+  const highlightIndex = weekly.reduce(
+    (maxI, d, i) => (d[activeSeries] > weekly[maxI][activeSeries] ? i : maxI),
+    0
   );
+
+  const weeklyRevenueTotal = weekly.reduce((sum, d) => sum + d.revenue, 0);
+  const revenueEstimate =
+    range === "week"
+      ? weeklyRevenueTotal
+      : range === "month"
+      ? weeklyRevenueTotal * 4
+      : weeklyRevenueTotal * 52;
+
+  const formatCurrency = (n: number) =>
+    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 
   return (
     <Card className="py-0">
@@ -62,75 +83,73 @@ export function ChartBarInteractive() {
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
           <CardTitle>Project Insights</CardTitle>
           <CardDescription>
-            Monthly task completion and hours logged overview
+            Track how many tasks were completed and total hours logged each week. This gives you an overview of your workload distribution.
           </CardDescription>
         </div>
-        <div className="flex">
-          {["projects", "revenue"].map((key) => {
-            const chart = key as keyof typeof chartConfig;
-            return (
-              <button
-                key={chart}
-                data-active={activeChart === chart}
-                className="data-[active=true]:bg-muted/50 relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
-                onClick={() => setActiveChart(chart)}
-              >
-                <span className="text-muted-foreground text-xs">
-                  {chartConfig[chart].label}
-                </span>
-                <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
-                </span>
-              </button>
-            );
-          })}
+        <div className="flex items-center gap-3 px-6 py-4 sm:py-6">
+          <label className="sr-only" htmlFor="insights-range">Range</label>
+          <select
+            id="insights-range"
+            value={range}
+            onChange={(e) => setRange(e.target.value as typeof range)}
+            className="rounded-full border border-slate-200 px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
+          >
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </select>
         </div>
       </CardHeader>
+
       <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                });
-              }}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    });
-                  }}
-                />
-              }
-            />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
-          </BarChart>
-        </ChartContainer>
+        <div className="rounded-2xl bg-slate-50 p-4 sm:p-6">
+          <div className="grid grid-cols-7 gap-6 items-end h-56 relative">
+            {weekly.map((d, i) => {
+              const pct = maxVal ? d[activeSeries] / maxVal : 0;
+              const dotOffset = Math.max(8, Math.round(pct * 160)); // px from bottom
+              const isHighlight = i === highlightIndex;
+              return (
+                <div key={i} className="relative flex h-full flex-col items-center justify-end">
+                  {/* Highlight track */}
+                  {isHighlight && (
+                    <div className="absolute bottom-9 top-2 w-10 rounded-full bg-slate-200" />
+                  )}
+
+                  {/* Vertical track */}
+                  <div className="relative mb-3 flex h-40 w-0.5 items-end rounded-full bg-slate-300">
+                    {/* Dot */}
+                    <div
+                      className="absolute left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-indigo-500"
+                      style={{ bottom: `${dotOffset}px` }}
+                    />
+                  </div>
+
+                  {/* Day pill */}
+                  <div
+                    className={`flex h-8 w-8 items-center justify-center rounded-full text-xs ${
+                      isHighlight ? "bg-black text-white" : "bg-slate-200 text-slate-700"
+                    }`}
+                  >
+                    {d.day}
+                  </div>
+
+                  {/* Bubble label */}
+                  {isHighlight && (
+                    <div className="absolute -top-3 rounded-full bg-black px-2 py-1 text-[10px] font-medium text-white">
+                      {d.projects} Projects
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Footer info */}
+          <div className="mt-6 flex items-start gap-2">
+            <div className="text-2xl font-semibold text-slate-900">{formatCurrency(revenueEstimate)}</div>
+            <div className="text-slate-500 text-sm leading-6">{range === "week" ? "Weekly revenue" : "Monthly revenue"} (estimated)</div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
