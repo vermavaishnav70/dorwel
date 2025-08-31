@@ -1,11 +1,10 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
-  const navigate = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,9 +43,9 @@ export default function ForgotPasswordPage() {
               <button type="submit" className="w-full h-[60px] bg-indigo-500 text-white text-lg font-semibold rounded-[60px] hover:bg-purple/90 transition-colors">
                 Send reset link
               </button>
-              <button type="button" onClick={() => navigate.push("/login")} className="w-full h-[58px] bg-white/60 border-2 border-gray-200 rounded-[30px] text-lg font-semibold text-gray-500 hover:bg-white/80 transition-colors">
-                Back to login
-              </button>
+              <Link href="login" className="block w-full">
+                <span className="inline-flex w-full h-[58px] items-center justify-center bg-white/60 border-2 border-gray-200 rounded-[30px] text-lg font-semibold text-gray-500 hover:bg-white/80 transition-colors">Back to login</span>
+              </Link>
             </form>
           ) : (
             <div className="space-y-6 text-center">
@@ -55,9 +54,9 @@ export default function ForgotPasswordPage() {
               </div>
               <h2 className="text-2xl font-semibold text-gray-700">Check your email</h2>
               <p className="text-gray-500">If an account exists for <span className="font-medium text-gray-600">{email}</span>, you will receive a password reset link.</p>
-              <button type="button" onClick={() => navigate.push("/login")} className="w-full h-[60px] bg-indigo-500 text-white text-lg font-semibold rounded-[60px] hover:bg-purple/90 transition-colors">
-                Return to login
-              </button>
+              <Link href="login" className="block w-full">
+                <span className="inline-flex w-full h-[60px] items-center justify-center bg-indigo-500 text-white text-lg font-semibold rounded-[60px] hover:bg-purple/90 transition-colors">Return to login</span>
+              </Link>
             </div>
           )}
         </div>
