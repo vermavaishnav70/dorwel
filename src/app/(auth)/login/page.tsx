@@ -121,6 +121,7 @@ export default function Index() {
               </label>
               <button
                 type="button"
+                onClick={() => navigate.push("/forgot-password")}
                 className="text-sm font-semibold text-gray-500 hover:underline"
               >
                 Forgot Password?
