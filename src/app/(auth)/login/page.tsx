@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Index() {
@@ -119,13 +120,12 @@ export default function Index() {
                 />
                 <span className="text-sm text-gray-400">Remember me</span>
               </label>
-              <button
-                type="button"
-                onClick={() => navigate.push("/forgot-password")}
+              <Link
+                href="forgot-password"
                 className="text-sm font-semibold text-gray-500 hover:underline"
               >
                 Forgot Password?
-              </button>
+              </Link>
             </div>
 
             {/* Sign In button */}
