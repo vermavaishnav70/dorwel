@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ navigationItems }) => {
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200/50">
           <div className="px-4 py-6 space-y-4">
-            <div className="pt-4 border-t border-slate-200">
+            <div className="md:hidden pb-4 border-b border-slate-200">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input

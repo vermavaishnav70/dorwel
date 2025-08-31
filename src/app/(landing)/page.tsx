@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import { ReduxExample } from "@/components/ReduxExample";
 import {
   MessageCircle,
   Play,
@@ -64,8 +63,6 @@ const LandingPage = (props: Props) => {
           </div>
         </div>
       </header>
-
-      <ReduxExample  />
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32">
