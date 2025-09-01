@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   MessageCircle,
@@ -17,11 +18,9 @@ import {
   Palette,
 } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 type Props = {};
 
 const LandingPage = (props: Props) => {
-  const navigate = useRouter();
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -51,12 +50,8 @@ const LandingPage = (props: Props) => {
 
             {/* Auth buttons */}
             <div className="flex items-center space-x-4">
-              <Button onClick={() => navigate.push("/login")} variant="ghost" className="text-gray-600">
-                Login
-              </Button>
-              <Button variant="ghost" className="text-blue-700">
-                Sign Up
-              </Button>
+              <Link href="login"><Button variant="ghost" className="text-gray-600">Login</Button></Link>
+              <Link href="signup"><Button variant="ghost" className="text-blue-700">Sign Up</Button></Link>
               <Avatar className="w-8 h-8 bg-green-500">
                 <AvatarFallback className="bg-green-500 text-white text-sm">
                   D
