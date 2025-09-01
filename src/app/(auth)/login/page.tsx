@@ -183,9 +183,9 @@ export default function Index() {
           {/* Footer */}
           <p className="text-center text-sm text-gray-400 mt-8">
             Don&apos;t have an account?{" "}
-            <button className="font-semibold text-gray-500 hover:underline">
+            <Link href="signup" className="font-semibold text-gray-500 hover:underline">
               Sign up here
-            </button>
+            </Link>
           </p>
         </div>
       </div>
