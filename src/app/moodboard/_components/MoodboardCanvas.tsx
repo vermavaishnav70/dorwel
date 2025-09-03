@@ -220,8 +220,8 @@ export function MoodboardCanvas() {
           {elements.map(renderElement)}
           
           {/* Canvas background grid */}
-          <div 
-            className="absolute inset-0 opacity-5"
+          <div
+            className="absolute inset-0 opacity-5 pointer-events-none"
             style={{
               backgroundImage: `
                 linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
