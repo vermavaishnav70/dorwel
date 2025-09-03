@@ -14,6 +14,7 @@ const navigationItems: NavigationItem[] = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },
   { id: "leads", label: "Leads", href: "/leads" },
   { id: "projects", label: "Projects", href: "/projects" },
+  { id: "moodboard", label: "Moodboard", href: "/moodboard" },
   {
     id: "proposals",
     label: "Proposals",
