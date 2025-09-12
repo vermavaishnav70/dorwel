@@ -8,8 +8,8 @@ export default function Index() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useRouter();
-  
-  const hanlelogin = (e:any) => {
+
+  const hanlelogin = (e: any) => {
     e.preventDefault();
     // Handle login logic here
     navigate.push("/dashboard");
@@ -28,18 +28,7 @@ export default function Index() {
           <div className="text-center mb-8">
             {/* Logo icon */}
             <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-icon">
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M33.1926 26.8073C32.0992 27.9007 30.3262 27.9007 29.2328 26.8073L24.4054 21.9797C23.3118 20.8863 23.3118 19.1134 24.4054 18.02L29.2328 13.1925C30.3262 12.099 32.0992 12.099 33.1926 13.1925L38.0202 18.02C39.1136 19.1134 39.1136 20.8863 38.0202 21.9797L33.1926 26.8073ZM10.7672 26.8073C9.67371 27.9007 7.90083 27.9007 6.80737 26.8073L1.97989 21.9797C0.886424 20.8863 0.886422 19.1134 1.97989 18.02L6.80737 13.1925C7.90083 12.099 9.67371 12.099 10.7672 13.1925L15.5946 18.02C16.6881 19.1134 16.6881 20.8863 15.5946 21.9797L10.7672 26.8073ZM21.98 38.0199C20.8864 39.1135 19.1136 39.1135 18.0201 38.0199L13.1926 33.1925C12.0991 32.0991 12.0991 30.3261 13.1926 29.2327L18.0201 24.4053C19.1136 23.3117 20.8864 23.3117 21.98 24.4053L26.8074 29.2327C27.9008 30.3261 27.9008 32.0991 26.8074 33.1925L21.98 38.0199ZM21.98 15.5945C20.8864 16.688 19.1136 16.688 18.0201 15.5945L13.1926 10.767C12.0991 9.67358 12.0991 7.90072 13.1926 6.80724L18.0201 1.97977C19.1136 0.886302 20.8864 0.8863 21.98 1.97977L26.8074 6.80724C27.9008 7.90072 27.9008 9.67358 26.8074 10.767L21.98 15.5945Z"
-                  fill="#7774FF"
-                />
-              </svg>
+              <img src="/logo.svg" />
             </div>
 
             {/* Title and subtitle */}
@@ -120,6 +109,7 @@ export default function Index() {
                 <span className="text-sm text-gray-400">Remember me</span>
               </label>
               <button
+                onClick={() => navigate.push("/forgot-password")}
                 type="button"
                 className="text-sm font-semibold text-gray-500 hover:underline"
               >
@@ -182,7 +172,10 @@ export default function Index() {
           {/* Footer */}
           <p className="text-center text-sm text-gray-400 mt-8">
             Don&apos;t have an account?{" "}
-            <button className="font-semibold text-gray-500 hover:underline">
+            <button
+              onClick={() => navigate.push("/signup")}
+              className="font-semibold text-gray-500 hover:underline"
+            >
               Sign up here
             </button>
           </p>

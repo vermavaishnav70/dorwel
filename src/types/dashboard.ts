@@ -38,6 +38,17 @@ export interface ChartData {
   active?: boolean;
 }
 
+export interface DayData {
+  /** Day label (e.g., 'M', 'T', 'W') */
+  label: string;
+  /** Full day name for accessibility */
+  fullName: string;
+  /** Number of projects for this day */
+  projects: number;
+  /** Optional metadata */
+  meta?: Record<string, unknown>;
+}
+
 export interface NavigationItem {
   id: string;
   label: string;

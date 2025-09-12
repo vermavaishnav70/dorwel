@@ -1,12 +1,18 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { DashboardStats, Project, Task, Client, ChartData } from '../../types/dashboard';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  DashboardStats,
+  Project,
+  Task,
+  Client,
+  DayData,
+} from "../../types/dashboard";
 
 interface DashboardState {
   stats: DashboardStats | null;
   projects: Project[];
   tasks: Task[];
   clients: Client[];
-  chartData: ChartData[];
+  chartData: DayData[];
   loading: boolean;
   error: string | null;
 }
@@ -23,7 +29,7 @@ const initialState: DashboardState = {
 
 // Async thunk for fetching dashboard data
 export const fetchDashboardData = createAsyncThunk(
-  'dashboard/fetchData',
+  "dashboard/fetchData",
   async () => {
     // Simulate API call - replace with actual API endpoint
     const response = await new Promise<DashboardState>((resolve) => {
@@ -37,62 +43,62 @@ export const fetchDashboardData = createAsyncThunk(
           },
           projects: [
             {
-              id: '1',
-              name: 'E-commerce Platform',
-              rate: '$2,500',
-              paymentStatus: 'paid',
-              type: 'remote',
-              description: 'Building a modern e-commerce platform',
+              id: "1",
+              name: "E-commerce Platform",
+              rate: "$2,500",
+              paymentStatus: "paid",
+              type: "remote",
+              description: "Building a modern e-commerce platform",
               progress: 75,
-              icon: '🛒',
+              icon: "🛒",
             },
             {
-              id: '2',
-              name: 'Mobile App Development',
-              rate: '$3,200',
-              paymentStatus: 'pending',
-              type: 'onsite',
-              description: 'iOS and Android app development',
+              id: "2",
+              name: "Mobile App Development",
+              rate: "$3,200",
+              paymentStatus: "pending",
+              type: "onsite",
+              description: "iOS and Android app development",
               progress: 45,
-              icon: '📱',
+              icon: "📱",
             },
           ],
           tasks: [
             {
-              id: '1',
-              task: 'Review project requirements',
-              time: '9:00 AM',
+              id: "1",
+              task: "Review project requirements",
+              time: "9:00 AM",
               urgent: true,
             },
             {
-              id: '2',
-              task: 'Client meeting preparation',
-              time: '2:00 PM',
+              id: "2",
+              task: "Client meeting preparation",
+              time: "2:00 PM",
               urgent: false,
             },
           ],
           clients: [
             {
-              id: '1',
-              name: 'John Smith',
-              email: 'john@example.com',
-              status: 'active',
+              id: "1",
+              name: "John Smith",
+              email: "john@example.com",
+              status: "active",
             },
             {
-              id: '2',
-              name: 'Sarah Johnson',
-              email: 'sarah@example.com',
-              status: 'pending',
+              id: "2",
+              name: "Sarah Johnson",
+              email: "sarah@example.com",
+              status: "pending",
             },
           ],
           chartData: [
-            { day: 'Mon', value: 45, height: '45%' },
-            { day: 'Tue', value: 52, height: '52%' },
-            { day: 'Wed', value: 38, height: '38%' },
-            { day: 'Thu', value: 65, height: '65%' },
-            { day: 'Fri', value: 48, height: '48%' },
-            { day: 'Sat', value: 32, height: '32%' },
-            { day: 'Sun', value: 55, height: '55%' },
+            { label: "M", fullName: "Monday", projects: 5 },
+            { label: "T", fullName: "Tuesday", projects: 8 },
+            { label: "W", fullName: "Wednesday", projects: 6 },
+            { label: "T", fullName: "Thursday", projects: 9 },
+            { label: "F", fullName: "Friday", projects: 7 },
+            { label: "S", fullName: "Saturday", projects: 3 },
+            { label: "S", fullName: "Sunday", projects: 2 },
           ],
           loading: false,
           error: null,
@@ -104,37 +110,49 @@ export const fetchDashboardData = createAsyncThunk(
 );
 
 const dashboardSlice = createSlice({
-  name: 'dashboard',
+  name: "dashboard",
   initialState,
   reducers: {
     setStats: (state, action: PayloadAction<DashboardStats>) => {
       state.stats = action.payload;
     },
     addProject: (state, action: PayloadAction<Project>) => {
-        state.projects.push(action.payload);
-      },
-    updateProject: (state, action: PayloadAction<{ id: string; updates: Partial<Project> }>) => {
-      const index = state.projects.findIndex(p => p.id === action.payload.id);
+      state.projects.push(action.payload);
+    },
+    updateProject: (
+      state,
+      action: PayloadAction<{ id: string; updates: Partial<Project> }>
+    ) => {
+      const index = state.projects.findIndex((p) => p.id === action.payload.id);
       if (index !== -1) {
-        state.projects[index] = { ...state.projects[index], ...action.payload.updates };
+        state.projects[index] = {
+          ...state.projects[index],
+          ...action.payload.updates,
+        };
       }
     },
     removeProject: (state, action: PayloadAction<string>) => {
-      state.projects = state.projects.filter(p => p.id !== action.payload);
+      state.projects = state.projects.filter((p) => p.id !== action.payload);
     },
     addTask: (state, action: PayloadAction<Task>) => {
       state.tasks.push(action.payload);
     },
-    updateTask: (state, action: PayloadAction<{ id: string; updates: Partial<Task> }>) => {
-      const index = state.tasks.findIndex(t => t.id === action.payload.id);
+    updateTask: (
+      state,
+      action: PayloadAction<{ id: string; updates: Partial<Task> }>
+    ) => {
+      const index = state.tasks.findIndex((t) => t.id === action.payload.id);
       if (index !== -1) {
-        state.tasks[index] = { ...state.tasks[index], ...action.payload.updates };
+        state.tasks[index] = {
+          ...state.tasks[index],
+          ...action.payload.updates,
+        };
       }
     },
     removeTask: (state, action: PayloadAction<string>) => {
-      state.tasks = state.tasks.filter(t => t.id !== action.payload);
+      state.tasks = state.tasks.filter((t) => t.id !== action.payload);
     },
-    setChartData: (state, action: PayloadAction<ChartData[]>) => {
+    setChartData: (state, action: PayloadAction<DayData[]>) => {
       state.chartData = action.payload;
     },
     clearError: (state) => {
@@ -157,7 +175,7 @@ const dashboardSlice = createSlice({
       })
       .addCase(fetchDashboardData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch dashboard data';
+        state.error = action.error.message || "Failed to fetch dashboard data";
       });
   },
 });
@@ -174,4 +192,4 @@ export const {
   clearError,
 } = dashboardSlice.actions;
 
-export default dashboardSlice.reducer; 
+export default dashboardSlice.reducer;

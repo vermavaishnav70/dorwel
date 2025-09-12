@@ -55,17 +55,17 @@ export default function DashboardPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <StatsGrid stats={stats} />
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <ProjectInsights chartData={chartData} />
-
+        <div className="flex gap-8">
+          <div className="flex flex-col gap-8">
+            <ProjectInsights chartData={chartData} />
+            <ClientPortal clients={clients} />
+          </div>
           <div className="space-y-6">
             <RecentProjects projects={projects} />
             <TodaysTasks tasks={tasks} />
             <PremiumUpgrade />
           </div>
         </div>
-
-        <ClientPortal clients={clients} />
       </main>
     </div>
   );

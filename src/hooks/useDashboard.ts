@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../store';
+import { useAppDispatch, useAppSelector } from "../store";
 import {
   fetchDashboardData,
   setStats,
@@ -10,20 +10,18 @@ import {
   removeTask,
   setChartData,
   clearError,
-} from '../store/slices/dashboardSlice';
-import type { DashboardStats, Project, Task, ChartData } from '../types/dashboard';
+} from "../store/slices/dashboardSlice";
+import type {
+  DashboardStats,
+  Project,
+  Task,
+  DayData,
+} from "../types/dashboard";
 
 export const useDashboard = () => {
   const dispatch = useAppDispatch();
-  const {
-    stats,
-    projects,
-    tasks,
-    clients,
-    chartData,
-    loading,
-    error,
-  } = useAppSelector((state) => state.dashboard);
+  const { stats, projects, tasks, clients, chartData, loading, error } =
+    useAppSelector((state) => state.dashboard);
 
   return {
     // State
@@ -34,19 +32,19 @@ export const useDashboard = () => {
     chartData,
     loading,
     error,
-    
+
     // Actions
     fetchDashboardData: () => dispatch(fetchDashboardData()),
     setStats: (stats: DashboardStats) => dispatch(setStats(stats)),
     addProject: (project: Project) => dispatch(addProject(project)),
-    updateProject: (id: string, updates: Partial<Project>) => 
+    updateProject: (id: string, updates: Partial<Project>) =>
       dispatch(updateProject({ id, updates })),
     removeProject: (id: string) => dispatch(removeProject(id)),
     addTask: (task: Task) => dispatch(addTask(task)),
-    updateTask: (id: string, updates: Partial<Task>) => 
+    updateTask: (id: string, updates: Partial<Task>) =>
       dispatch(updateTask({ id, updates })),
     removeTask: (id: string) => dispatch(removeTask(id)),
-    setChartData: (data: ChartData[]) => dispatch(setChartData(data)),
+    setChartData: (data: DayData[]) => dispatch(setChartData(data)),
     clearError: () => dispatch(clearError()),
   };
-}; 
+};
